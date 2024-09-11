@@ -16,9 +16,7 @@ namespace Tetris
                 currentBlock.Reset();
                 for (int i = 0; i < 2; i++)
                 {
-                    int d = this.Direction == Direction.Down ? 1 : -1
-                    currentBlock.Move(-1, 0);
-                    currentBlock.Move(this.GameGrid.NumberOfRows / 4, 0);
+                    currentBlock.Move(1, 0);
                     if (!BlockFits())
                     {
                         currentBlock.Move(-1, 0);
@@ -48,7 +46,7 @@ namespace Tetris
 
         public GameState()
         {
-            this.GameGrid = new GameGrid(42, 10);
+            this.GameGrid = new GameGrid(22, 10);
             this.BlockQueue = new BlockQueue();
             this.CurrentBlock = BlockQueue.GetAndUpdate();
             this.CanHold = true;
