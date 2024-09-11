@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tetris
+namespace Tetris.Blocks
 {
     public abstract class Block
     {
@@ -14,46 +14,46 @@ namespace Tetris
 
         public Block()
         {
-            this.Offset = new Position(StartOffset.RowIndex, StartOffset.ColumnIndex);
+            Offset = new Position(StartOffset.RowIndex, StartOffset.ColumnIndex);
 
         }
 
         public IEnumerable<Position> TilePositions()
         {
-            foreach(Position p in Tiles[this.RotationState])
+            foreach (Position p in Tiles[RotationState])
             {
-                yield return new Position(p.RowIndex + this.Offset.RowIndex, p.ColumnIndex + this.Offset.ColumnIndex);
+                yield return new Position(p.RowIndex + Offset.RowIndex, p.ColumnIndex + Offset.ColumnIndex);
             }
         }
 
         public void RotateClockwise()
         {
-            this.RotationState = (this.RotationState + 1) % Tiles.Length;
+            RotationState = (RotationState + 1) % Tiles.Length;
         }
 
         public void RotateCounterClockwise()
         {
-            if (this.RotationState == 0)
+            if (RotationState == 0)
             {
-                this.RotationState = Tiles.Length - 1;
+                RotationState = Tiles.Length - 1;
             }
             else
             {
-                this.RotationState--;
+                RotationState--;
             }
         }
 
         public void Move(int numberOfRows, int numberOfColumns)
         {
-            this.Offset.RowIndex += numberOfRows;
-            this.Offset.ColumnIndex += numberOfColumns;
+            Offset.RowIndex += numberOfRows;
+            Offset.ColumnIndex += numberOfColumns;
         }
 
         public void Reset()
         {
-            this.RotationState = 0;
-            this.Offset.RowIndex = this.StartOffset.RowIndex;
-            this.Offset.ColumnIndex = this.StartOffset.ColumnIndex;
+            RotationState = 0;
+            Offset.RowIndex = StartOffset.RowIndex;
+            Offset.ColumnIndex = StartOffset.ColumnIndex;
         }
 
     }

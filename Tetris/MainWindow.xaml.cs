@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TetrisBlocks = Tetris.Blocks;
 
 namespace Tetris
 {
@@ -90,7 +91,7 @@ namespace Tetris
             }
         }
 
-        private void DrawBlock(Block block)
+        private void DrawBlock(TetrisBlocks.Block block)
         {
             foreach (Position p in block.TilePositions())
             {
@@ -101,11 +102,11 @@ namespace Tetris
 
         private void DrawNextBlock(BlockQueue blockQueue)
         {
-            Block next = blockQueue.NextBlock;
+            TetrisBlocks.Block next = blockQueue.NextBlock;
             NextImage.Source = blockImages[next.Id];
         }
 
-        private void DrawHeldBlock(Block heldBlock)
+        private void DrawHeldBlock(TetrisBlocks.Block heldBlock)
         {
             if (heldBlock == null)
             {
@@ -117,7 +118,7 @@ namespace Tetris
             }
         }
 
-        private void DrawGhostBlock(Block block)
+        private void DrawGhostBlock(TetrisBlocks.Block block)
         {
             int dropDistance = gameState.BlockDropDistance();
             foreach (Position p in block.TilePositions())
@@ -133,7 +134,7 @@ namespace Tetris
             DrawGhostBlock(gameState.CurrentBlock);
             DrawBlock(gameState.CurrentBlock);
             DrawNextBlock(gameState.BlockQueue);
-            DrawHeldBlock(gameState.HeldBlock);
+            DrawHeldBlock(gameState.HeldBlock!);
             ScoreText.Text = $"Score: {gameState.Score}";
         }
 

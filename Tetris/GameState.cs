@@ -1,42 +1,54 @@
-﻿namespace Tetris
+﻿using Tetris.Blocks;
+using Tetris.Enums;
+
+namespace Tetris
 {
     public class GameState
     {
-        private Block currentBlock;
+        private Block? currentBlock;
 
         public Block CurrentBlock
         {
-            get => this.currentBlock;
+            get => this.currentBlock!;
             private set
             {
                 this.currentBlock = value;
                 currentBlock.Reset();
                 for (int i = 0; i < 2; i++)
                 {
-                    currentBlock.Move(1, 0);
+                    int d = this.Direction == Direction.Down ? 1 : -1
+                    currentBlock.Move(-1, 0);
+                    currentBlock.Move(this.GameGrid.NumberOfRows / 4, 0);
                     if (!BlockFits())
                     {
                         currentBlock.Move(-1, 0);
                     }
                 }
             }
-
         }
 
         public GameGrid GameGrid { get; }
-        public BlockQueue BlockQueue { get;  }
+        public BlockQueue BlockQueue { get; }
         public bool GameOver { get; private set; }
 
         public int Score { get; private set; }
 
-        public Block HeldBlock { get; private set; }
+        public Block? HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
-
+        public Direction direction { get; private set; } = Direction.Down;
+        public Direction Direction
+        {
+            get => this.direction;
+            set
+            {
+                this.direction = value;
+            }
+        }
 
         public GameState()
         {
-            this.GameGrid = new GameGrid(22, 10);
+            this.GameGrid = new GameGrid(42, 10);
             this.BlockQueue = new BlockQueue();
             this.CurrentBlock = BlockQueue.GetAndUpdate();
             this.CanHold = true;
